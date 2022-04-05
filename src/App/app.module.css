@@ -1,3 +1,4 @@
 .app {
+    height: 100vh;
     background: url('../background_app.jpg') center center / cover no-repeat;
 }
