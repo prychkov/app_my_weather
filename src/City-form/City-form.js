@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import styles from './city.module.css';
 import Button from '../Button';
 
 function CityForm({onChange}) { // функция из App.js меняющая состояние в App.js
@@ -23,11 +24,12 @@ function CityForm({onChange}) { // функция из App.js меняющая �
   }
 
   return (
-      <div>
+      <div className={styles.city}>
         <form onSubmit={handleSubmit}>
-            <h4> City name:
-                <input placeholder="Your city" onChange={handlChange}/>
-            </h4>
+            <label> City name:
+              <input className={styles.input} type="text" name="city" placeholder="Your city" onChange={handlChange}/>
+            </label>        
+            <br/>
             <Button />
         </form>
       </div>

@@ -1,0 +1,11 @@
+.city {
+    width: 357px;
+    margin: 40vh auto;
+}
+
+.input {
+    width: 200px;
+    height: 25px;
+    margin-left: 10px;
+    padding: 5px;
+}

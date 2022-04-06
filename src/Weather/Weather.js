@@ -1,6 +1,8 @@
 import {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './weather.module.css';
+
 import APIkey from '../APIkey';
 import Error from '../Error';
 
@@ -36,7 +38,7 @@ function Weather({city}) {
 
   // если состояние не установлено и нет ошибки возвразает Enter city please и дальше не идет
   if (dataWeather === null && !error) {
-    return <h3>Enter city please</h3>;
+    return <h3 className={styles.weather}>Enter city please</h3>;
   }
 
   // если ошибка показываем компонент Error и ниже не идет код
@@ -50,9 +52,9 @@ function Weather({city}) {
   // конвертация из Кельвин в градусы по цельсию
   const degreeСelsius = (main.temp - 273.15).toFixed(1);
   return (
-    <div>
-      <h1>{`City: ${name}`}</h1>
-      <h2>{`Temperature: ${degreeСelsius} ºC`}</h2>
+    <div className={styles.weather}>
+      <h1 className={styles.title}>{`City: ${name}`}</h1>
+      <h2 className={styles.title}>{`Temperature: ${degreeСelsius} ºC`}</h2>
     </div>
   );
 }
