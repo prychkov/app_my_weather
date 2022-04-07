@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState} from "react";
+
 import styles from './app.module.css';
+
 import CityForm from "../City-form";
 import Weather from "../Weather";
 
 function App() {
   const [city, setData] = useState('');
-
+  
   // менет переменную city в зависимости, что передано с CityForm при событии submit
   const onChange = (values) => {
     setData(values);
