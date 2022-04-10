@@ -20,7 +20,7 @@ function Weather({city}) {
       try {
         // делает запрос, чтобы получить координаты
         const resCoordinates = await fetch(
-          `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIkey}`
+          `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIkey}`
         );
         const dataCoordinates = await resCoordinates.json();
 
