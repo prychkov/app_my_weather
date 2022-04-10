@@ -8,6 +8,7 @@ import Error from '../Error';
 
 function Weather({city}) {
   // устанавлииваем первоначальное состоние
+  const [cityName, setCityName] = useState(null);
   const [dataWeather, setDataWeather] = useState(null);
   const [error, setError] = useState(null);
   
@@ -17,11 +18,28 @@ function Weather({city}) {
     // функция запроса на API вызывается в useEffect после первого рендера 
     const getWeatherFromAPI = async (APIkey) => {
       try {
-        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}`);
-        const data = await res.json();
+        // делает запрос, чтобы получить координаты
+        const resCoordinates = await fetch(
+          `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${APIkey}`
+        );
+        const dataCoordinates = await resCoordinates.json();
 
         //усли статус не ok выбросить ошибку и перейти в блок catch
-        if (!res.ok) throw data;
+        if (!resCoordinates.ok) throw dataCoordinates;
+
+        const cityName = dataCoordinates.map((item) => item.name);
+        const [lat] = dataCoordinates.map((item) => item.lat);
+        const [lon] = dataCoordinates.map((item) => item.lon);
+
+        setCityName(cityName); // устанавливает новое состояние города
+        
+        // делает запрос по координатам, чтобы получить данные погоды
+        const resWeather = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}`
+        );
+        const data = await resWeather.json();
+
+        if(!resWeather.ok) throw data;
 
         setDataWeather(data);  // устанавливает новое состояние
         setError(null); // обнуляем ошибку при успешном запросе
@@ -47,14 +65,15 @@ function Weather({city}) {
   }
 
   // если все предыдущие проверки прошли, то деструктурируем объект dataWeather
-  const { name, main } = dataWeather;
+  const { main, sys} = dataWeather;
 
   // конвертация из Кельвин в градусы по цельсию
   const degreeСelsius = (main.temp - 273.15).toFixed(1);
   return (
     <div className={styles.weather}>
-      <h1 className={styles.title}>{`City: ${name}`}</h1>
-      <h2 className={styles.title}>{`Temperature: ${degreeСelsius} ºC`}</h2>
+      <h2 className={styles.title}>{`City: ${cityName}`}</h2>
+      <h2 className={styles.title}>{`Temperature:  ${degreeСelsius}ºC`}</h2>
+      <h2 className={styles.title}>{`Country:  ${sys.country}`}</h2>
     </div>
   );
 }
