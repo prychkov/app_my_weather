@@ -12,6 +12,8 @@ function Weather({city}) {
   const [dataWeather, setDataWeather] = useState(null);
   const [error, setError] = useState(null);
   
+  const iso = require('iso-3166-1');
+  const countries = iso.all();
 
   // идет на API после return 'Enter city...', не доходя до основного render
   useEffect(() => {
@@ -66,6 +68,9 @@ function Weather({city}) {
 
   // если все предыдущие проверки прошли, то деструктурируем объект dataWeather
   const { main, sys} = dataWeather;
+  const сountryCode = sys.country;
+
+  const { country } = countries.find((item) => item.alpha2 === сountryCode);  
 
   // конвертация из Кельвин в градусы по цельсию
   const degreeСelsius = (main.temp - 273.15).toFixed(1);
@@ -73,7 +78,7 @@ function Weather({city}) {
     <div className={styles.weather}>
       <h2 className={styles.title}>{`City: ${cityName}`}</h2>
       <h2 className={styles.title}>{`Temperature:  ${degreeСelsius}ºC`}</h2>
-      <h2 className={styles.title}>{`Country:  ${sys.country}`}</h2>
+      <h2 className={styles.title}>{`Country:  ${country}`}</h2>
     </div>
   );
 }
