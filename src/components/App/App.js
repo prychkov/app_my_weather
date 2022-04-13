@@ -6,11 +6,11 @@ import CityForm from "../City-form";
 import Weather from "../Weather";
 
 function App() {
-  const [city, setData] = useState('');
+  const [city, setCity] = useState('');
   
   // менет переменную city в зависимости, что передано с CityForm при событии submit
-  const onChange = (values) => {
-    setData(values);
+  const onChange = (value) => {
+    setCity(value);
   }
 
   return (
