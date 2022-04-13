@@ -6,24 +6,12 @@ import styles from './weather.module.css';
 import APIkey from '../../APIkey';
 import Error from '../Error';
 
-function Weather({city}) {
+function Weather({city, countries}) {
   // устанавлииваем первоначальное состоние
   const [cityName, setCityName] = useState(null);
   const [dataWeather, setDataWeather] = useState(null);
   const [error, setError] = useState(null); 
   
-  const iso = useMemo(
-    () => require('iso-3166-1'),
-    []
-  ); 
-  
-  // мемоизация вычисление, если iso не меняется при перерендере это вычисление срабатывать не будет,
-  // а в countries будет лежать предыдущее вычисленное значение
-  const countries = useMemo(
-    () => iso.all(),
-    [iso]
-  );
-
   // идет на API после return 'Enter city...', не доходя до основного render
   useEffect(() => {
     // функция запроса на API вызывается в useEffect после первого рендера 

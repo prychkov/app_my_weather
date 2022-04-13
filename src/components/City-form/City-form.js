@@ -4,6 +4,7 @@ import styles from './city.module.css';
 import Button from '../Button';
 
 function CityForm({onChange}) { // функция из App.js меняющая состояние в App.js
+  
   // приходит в виде объекта, но может прийти и ввиде массива, как useState api,
   // если из use-value вернуть массив
   // useState api сделано в виде массива, чтобы удобно можно было именовать переменные
