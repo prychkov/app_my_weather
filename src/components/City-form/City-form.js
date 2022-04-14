@@ -1,14 +1,9 @@
-import useValue from '../../hooks/use-value';
+import city from '../../hocs/city';
 import PropTypes from 'prop-types';
 import styles from './city.module.css';
 import Button from '../Button';
 
-function CityForm({onChange}) { // функция из App.js меняющая состояние в App.js
-  
-  // приходит в виде объекта, но может прийти и ввиде массива, как useState api,
-  // если из use-value вернуть массив
-  // useState api сделано в виде массива, чтобы удобно можно было именовать переменные
-  const {values, handlChange, reset} = useValue('');
+function CityForm({onChange, values, handlChange, reset}) { // функция из App.js меняющая состояние в App.js
 
   // срабатывает при событии submit и вызывает onChange с текущим состоянием этого компонента
   const handleSubmit = (event) => {
@@ -40,4 +35,4 @@ CityForm.propTypes = {
   onChange: PropTypes.func,
 }
 
-export default CityForm;
+export default city(CityForm);

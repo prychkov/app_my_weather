@@ -3,7 +3,6 @@ import styles from './weather.module.css';
 import Error from '../Error';
 
 function Weather({countries, coordinates, weather, error}) {
-  console.log(error);
   // если состояние не установлено и нет ошибки возвразает Enter city please и дальше не идет
   if (weather === null && !error) {
     return <h3 className={styles.weather}>Enter city please</h3>;
