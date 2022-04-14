@@ -3,7 +3,7 @@ import styles from './weather.module.css';
 import Error from '../Error';
 
 function Weather({countries, coordinates, weather, error}) {
-  console.log(countries);
+  console.log(error);
   // если состояние не установлено и нет ошибки возвразает Enter city please и дальше не идет
   if (weather === null && !error) {
     return <h3 className={styles.weather}>Enter city please</h3>;
@@ -32,7 +32,25 @@ function Weather({countries, coordinates, weather, error}) {
 }
 
 Weather.propTypes = {
-  city: PropTypes.string,
+  countries: PropTypes.arrayOf(
+    PropTypes.shape({
+      alpha2: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  coordinates: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired
+  ),
+  weather: PropTypes.shape({
+    main: PropTypes.shape({
+      temp: PropTypes.number.isRequired,
+    }),
+    sys: PropTypes.shape({
+      country: PropTypes.string.isRequired,
+    })
+  }),
+  error: PropTypes.object,
 }
 
 export default Weather;
