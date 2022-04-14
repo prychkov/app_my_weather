@@ -6,8 +6,8 @@ import Weather from "../Weather";
 
 function App() {
   const [city, setCity] = useState('');
-  const [dataCoordinates, setDataCoordinates] = useState(null);
-  const [dataWeather, setDataWeather] = useState(null);
+  const [coordinates, setCoordinates] = useState(null);
+  const [weather, setWeather] = useState(null);
   const [error, setError] = useState(null);
 
   // менет переменную city в зависимости, что передано с CityForm при событии submit
@@ -18,7 +18,7 @@ function App() {
   // идет на API после return 'Enter city...', не доходя до основного render
   useEffect(() => {
     // функция запроса на API вызывается в useEffect после первого рендера 
-    const getDataCoordinatesAPI = async (APIkey) => {
+    const getCoordinatesAPI = async (APIkey) => {
       try {
         // делает запрос, чтобы получить координаты
         const res = await fetch(
@@ -29,7 +29,7 @@ function App() {
         //усли статус не ok выбросить ошибку и перейти в блок catch
         if (!res.ok) throw data;
 
-        setDataCoordinates(data); // устанавливает новое состояние города
+        setCoordinates(data); // устанавливает новое состояние города
         setError(null); // обнуляем ошибку при успешном запросе
       } catch(error) {
         setError(error); // устанавливаем состояние ошибки
@@ -38,16 +38,16 @@ function App() {
 
     // если city не пустое делаем запрос на API
     if (city) {
-      getDataCoordinatesAPI(APIkey);
+      getCoordinatesAPI(APIkey);
     }
   }, [city]);
   
   useEffect(() => {
     // функция запроса на API вызывается в useEffect после первого рендера 
-    const getdataWeatherAPI = async (APIkey) => {
+    const getWeatherAPI = async (APIkey) => {
       try {
-        const lat = dataCoordinates.map((item) => item.lat);
-        const lon = dataCoordinates.map((item) => item.lon);       
+        const lat = coordinates.map((item) => item.lat);
+        const lon = coordinates.map((item) => item.lon);       
         // делает запрос по координатам, чтобы получить данные погоды
         const res = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}`
@@ -56,7 +56,7 @@ function App() {
 
         if(!res.ok) throw data;
 
-        setDataWeather(data);  // устанавливает новое состояние
+        setWeather(data);  // устанавливает новое состояние
         setError(null); // обнуляем ошибку при успешном запросе
       } catch(error) {
         setError(error); // устанавливаем состояние ошибки
@@ -64,10 +64,10 @@ function App() {
     };
 
     // если city не пустое делаем запрос на API
-    if (dataCoordinates) {
-      getdataWeatherAPI(APIkey);
+    if (coordinates) {
+      getWeatherAPI(APIkey);
     }
-  }, [dataCoordinates]);
+  }, [coordinates]);
   
   const iso = useMemo(
     () => require('iso-3166-1'),
@@ -86,8 +86,8 @@ function App() {
       <CityForm onChange={onChange}/>
       <Weather
       countries={countries}
-      dataCoordinates={dataCoordinates}
-      dataWeather={dataWeather}
+      coordinates={coordinates}
+      weather={weather}
       error={error}/>
     </div>
   );
