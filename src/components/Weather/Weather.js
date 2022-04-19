@@ -1,36 +1,61 @@
+import { useMemo } from "react";
+import useFetch from "../../hooks/use-fetch";
 import PropTypes from 'prop-types';
 import styles from './weather.module.css';
+import APIkey from '../../APIkey';
 import Error from '../Error';
 
-function Weather({countries, coordinates, weather, error}) {
-  // если состояние не установлено и нет ошибки возвразает Enter city please и дальше не идет
-  if (weather === null && !error) {
-    return <h3 className={styles.weather}>Enter city please</h3>;
+function Weather(props) {
+
+  const iso = useMemo(
+    () => require('iso-3166-1'),
+    []
+  ); 
+  
+  // мемоизация вычисление, если iso не меняется при перерендере это вычисление срабатывать не будет,
+  // а в countries будет лежать предыдущее вычисленное значение
+  const countries = useMemo(
+    () => iso.all(),
+    [iso]
+  );
+
+  const lat = props.data.map((item) => item.lat);
+  const lon = props.data.map((item) => item.lon);
+
+  const url = `
+    https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}
+  `;
+
+  const {loading, loaded, data, error} = useFetch(url, props.city);
+
+  if (!loading && !loaded) {
+    return <h3 className={styles.city}>Waiting please, loading start now</h3>;
   }
 
-  // если ошибка показываем компонент Error и ниже не идет код
+  if (loading) {
+    return <h3 className={styles.city}>Loading...</h3>;
+  }
+
   if (error) {
     return <Error error={error} />
   }
 
-  // если все предыдущие проверки прошли, то деструктурируем объект dataWeather
-  const { main, sys} = weather;
+  const { main, sys} = data;
   const сountryCode = sys.country;
-
+  
   const { country } = countries.find((item) => item.alpha2 === сountryCode);  
 
   // конвертация из Кельвин в градусы по цельсию
   const degreeСelsius = (main.temp - 273.15).toFixed(1);
   return (
     <div className={styles.weather}>
-      <h2 className={styles.title}>{`City: ${coordinates.map((item) => item.name)}`}</h2>
       <h2 className={styles.title}>{`Temperature:  ${degreeСelsius}ºC`}</h2>
       <h2 className={styles.title}>{`Country:  ${country}`}</h2>
     </div>
   );
 }
 
-Weather.propTypes = {
+/* Weather.propTypes = {
   countries: PropTypes.arrayOf(
     PropTypes.shape({
       alpha2: PropTypes.string.isRequired,
@@ -50,6 +75,6 @@ Weather.propTypes = {
     })
   }),
   error: PropTypes.object,
-}
+} */
 
 export default Weather;

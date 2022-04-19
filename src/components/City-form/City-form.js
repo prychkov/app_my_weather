@@ -1,9 +1,9 @@
 import city from '../../hocs/city';
 import PropTypes from 'prop-types';
-import styles from './city.module.css';
+import styles from './city-form.module.css';
 import Button from '../Button';
 
-function CityForm({onChange, values, handlChange, reset}) { // функция из App.js меняющая состояние в App.js
+function CityForm({onChange, values, handlChange, reset}) { // onChange функция из App.js меняющая состояние в App.js
 
   // срабатывает при событии submit и вызывает onChange с текущим состоянием этого компонента
   const handleSubmit = (event) => {
