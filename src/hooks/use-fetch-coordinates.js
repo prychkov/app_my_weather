@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
 export default function useFetch(url, city) {
-    const [data, setData] = useState({
+    const [coordinates, setCoordinates] = useState({
         loading: false,
         loaded: false,
-        data: null,
+        coordinates: null,
         error: null,
     });
 
@@ -12,7 +12,7 @@ export default function useFetch(url, city) {
         const abortController = new AbortController();
 
         const fetchAPI = async (url) => {
-          setData({loading: true,});
+          setCoordinates({loading: true,});
     
             try {
               const res = await fetch(url);
@@ -20,15 +20,15 @@ export default function useFetch(url, city) {
     
               if (!res.ok) throw data;
     
-              setData({
+              setCoordinates({
                 loading: false,
                 loaded: true,
-                data,
+                coordinates: data,
                 error: null,
               }); 
             } catch(error) {
               if (!abortController.signal.aborted) {
-                setData({
+                setCoordinates({
                   loading: false,
                   loaded: false,
                   error,            
@@ -49,5 +49,5 @@ export default function useFetch(url, city) {
         }
     }, [city, url]);
 
-    return {...data};
+    return {...coordinates};
 }

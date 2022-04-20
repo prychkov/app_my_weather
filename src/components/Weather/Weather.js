@@ -1,11 +1,11 @@
 import { useMemo } from "react";
-import useFetch from "../../hooks/use-fetch";
+import useFetch from "../../hooks/use-fetch-weather";
 import PropTypes from 'prop-types';
 import styles from './weather.module.css';
 import APIkey from '../../APIkey';
 import Error from '../Error';
 
-function Weather(props) {
+function Weather({coordinates}) {
 
   const iso = useMemo(
     () => require('iso-3166-1'),
@@ -19,14 +19,14 @@ function Weather(props) {
     [iso]
   );
 
-  const lat = props.data.map((item) => item.lat);
-  const lon = props.data.map((item) => item.lon);
+  const lat = coordinates.map((item) => item.lat);
+  const lon = coordinates.map((item) => item.lon);
 
   const url = `
     https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}
   `;
 
-  const {loading, loaded, data, error} = useFetch(url, props.city);
+  const {loading, loaded, weather, error} = useFetch(url, coordinates);
 
   if (!loading && !loaded) {
     return <h3 className={styles.city}>Waiting please, loading start now</h3>;
@@ -40,7 +40,7 @@ function Weather(props) {
     return <Error error={error} />
   }
 
-  const { main, sys} = data;
+  const { main, sys} = weather;
   const сountryCode = sys.country;
   
   const { country } = countries.find((item) => item.alpha2 === сountryCode);  
