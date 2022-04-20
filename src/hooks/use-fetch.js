@@ -8,35 +8,46 @@ export default function useFetch(url, city) {
         error: null,
     });
 
-    async function fetchAPI(url) {
-      setData({loading: true,});
-
-        try {
-          const res = await fetch(url);
-          const data = await res.json();
-
-          if (!res.ok) throw data;
-
-          setData({
-            loading: false,
-            loaded: true,
-            data,
-            error: null,
-          }); 
-        } catch(error) {
-          setData({
-              loading: false,
-              loaded: false,
-              error,            
-          });
-        }
-    };
-
     useEffect(() => {
+        const abortController = new AbortController();
+
+        const fetchAPI = async (url) => {
+          setData({loading: true,});
+    
+            try {
+              const res = await fetch(url);
+              const data = await res.json();
+    
+              if (!res.ok) throw data;
+    
+              setData({
+                loading: false,
+                loaded: true,
+                data,
+                error: null,
+              }); 
+            } catch(error) {
+              if (!abortController.signal.aborted) {
+                setData({
+                  loading: false,
+                  loaded: false,
+                  error,            
+                });
+              }
+              
+            }
+        };
+        
         if (city) {
-            fetchAPI(url)
+          fetchAPI(url, {
+            signal: abortController.signal
+          });
+          
+          return () => {
+            abortController.abort();
+          }
         }
     }, [city, url]);
 
-    return {...data, fetchAPI};
+    return {...data};
 }
