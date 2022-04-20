@@ -5,7 +5,14 @@ export default function useValue(initialValue) {
 
     // меняем текущее состояние в зависимости от пользовательского ввода
     const handlChange = (event) => {
-        setValue(event.target.value);
+        const re = /^[a-zа-я]{1,}$/i;
+        const valid = re.test(event.target.value);
+
+        if (valid) {
+            setValue(event.target.value);
+        } else {
+            event.target.value = '';
+        }
     }
 
     // очищает состояние
