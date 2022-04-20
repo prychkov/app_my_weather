@@ -16,9 +16,9 @@ export default function useFetch(url, city) {
     
             try {
               const res = await fetch(url);
-              const data = await res.json();
+              const data = await res.json();             
     
-              if (!res.ok) throw data;
+              if (!res.ok || data.length === 0) throw data;
     
               setCoordinates({
                 loading: false,
@@ -31,7 +31,7 @@ export default function useFetch(url, city) {
                 setCoordinates({
                   loading: false,
                   loaded: false,
-                  error,            
+                  error: true,            
                 });
               }
               

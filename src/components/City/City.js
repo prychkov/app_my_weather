@@ -11,7 +11,7 @@ function City({city}) {
 
     const {loading, loaded, coordinates, error} = useFetch(url, city);
 
-    if (!loading && !loaded) {
+    if (!loading && !loaded && !error) {
         return <h3 className={styles.city}>Enter city please</h3>;
     }
 

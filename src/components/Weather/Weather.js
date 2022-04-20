@@ -28,7 +28,7 @@ function Weather({coordinates}) {
 
   const {loading, loaded, weather, error} = useFetch(url, coordinates);
 
-  if (!loading && !loaded) {
+  if (!loading && !loaded && !error) {
     return <h3 className={styles.city}>Waiting please, loading start now</h3>;
   }
 
