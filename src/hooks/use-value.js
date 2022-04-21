@@ -11,7 +11,7 @@ export default function useValue(initialValue) {
         if (valid) {
             setValue(event.target.value);
         } else {
-            event.target.value = '';
+            event.target.value = event.target.value.slice(0, -1);
         }
     }
 
