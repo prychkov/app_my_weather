@@ -31,7 +31,7 @@ export default function useFetch(url, city) {
                 setCoordinates({
                   loading: false,
                   loaded: false,
-                  error: true,            
+                  error,            
                 });
               }
               
