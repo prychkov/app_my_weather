@@ -31,4 +31,8 @@ function City({city}) {
     );
 }
 
+City.propTypes = {
+    city: PropTypes.string.isRequired,
+}
+
 export default City;

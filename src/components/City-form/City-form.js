@@ -4,7 +4,6 @@ import styles from './city-form.module.css';
 import Button from '../Button';
 
 function CityForm({onChange, values, handlChange, reset}) { // onChange функция из App.js меняющая состояние в App.js
-
   // срабатывает при событии submit и вызывает onChange с текущим состоянием этого компонента
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,7 +31,10 @@ function CityForm({onChange, values, handlChange, reset}) { // onChange функ
 }
 
 CityForm.propTypes = {
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+  values: PropTypes.string.isRequired,
+  handlChange: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
 }
 
 export default city(CityForm);

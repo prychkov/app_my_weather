@@ -6,7 +6,6 @@ import APIkey from '../../APIkey';
 import Error from '../Error';
 
 function Weather({coordinates}) {
-
   const iso = useMemo(
     () => require('iso-3166-1'),
     []
@@ -55,26 +54,13 @@ function Weather({coordinates}) {
   );
 }
 
-/* Weather.propTypes = {
-  countries: PropTypes.arrayOf(
-    PropTypes.shape({
-      alpha2: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+Weather.propTypes = {
   coordinates: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired
-  ),
-  weather: PropTypes.shape({
-    main: PropTypes.shape({
-      temp: PropTypes.number.isRequired,
-    }),
-    sys: PropTypes.shape({
-      country: PropTypes.string.isRequired,
+      lat: PropTypes.number.isRequired,
+      lon: PropTypes.number.isRequired,
     })
-  }),
-  error: PropTypes.object,
-} */
+  ),
+}
 
 export default Weather;

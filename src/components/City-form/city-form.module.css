@@ -1,6 +1,7 @@
 .city {
     width: 357px;
-    margin: 40vh auto;
+    margin: 0 auto;
+    margin-top: 40vh;
 }
 
 .input {
