@@ -3,7 +3,7 @@ import {LOAD_COORDINATES, REQUEST, SUCCESS, FAILURE} from '../constants';
 const initialState = {
 	loading: false,
 	loaded: false,
-	coordinates: null,
+	data: null,
 	error: null,
 }
 
@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
 		case LOAD_COORDINATES + SUCCESS:
 			return {
 				...state,
-				coordinates: data,
+				data,
 				loading: false,
 				loaded: true,
 				error: null,
