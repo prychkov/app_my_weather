@@ -1,4 +1,3 @@
-import useFetch from "../../hooks/use-fetch-coordinates";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import styles from './city.module.css';
@@ -11,9 +10,7 @@ import {
 	coordinatesErrorSelector,
 } from '../../redux/selectors';
 
-function City({loading, loaded, coordinates, error}) {
-
-    //const {loading, loaded, coordinates, error} = useFetch(url, city);
+function City({city, loading, loaded, coordinates, error}) {
 
     if (!loading && !loaded && !error) {
         return <h3 className={styles.city}>Enter city please</h3>;
