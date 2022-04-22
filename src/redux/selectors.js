@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-const coordinatesSelector = (state) => state.coordinates.data;
+export const coordinatesSelector = (state) => state.coordinates.data;
 
 export const coordinatesLoadingSelector = (state) => state.coordinates.loading;
 export const coordinatesLoadedSelector = (state) => state.coordinates.loaded;
