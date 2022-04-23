@@ -11,3 +11,13 @@ export const weatherSelector = (state) => state.weather.data;
 export const weatherLoadingSelector = (state) => state.weather.loading;
 export const weatherLoadedSelector = (state) => state.weather.loaded;
 export const weatherErrorSelector = (state) => state.weather.error;
+
+const isoSelector = createSelector(
+	[],
+	() => require('iso-3166-1')
+);
+
+export const countriesSelector = createSelector(
+	[isoSelector],
+	(iso) => iso.all()
+);

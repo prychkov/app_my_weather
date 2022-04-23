@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import styles from './weather.module.css';
@@ -7,23 +7,12 @@ import {
   weatherSelector,
   weatherLoadingSelector,
   weatherLoadedSelector,
-  weatherErrorSelector
+  weatherErrorSelector,
+  countriesSelector,
 } from '../../redux/selectors';
 import {loadWeather} from "../../redux/actions";
 
-function Weather({coordinates, weather, loading, loaded, error, loadWeather}) {
-  const iso = useMemo(
-    () => require('iso-3166-1'),
-    []
-  ); 
-  
-  // мемоизация вычисление, если iso не меняется при перерендере это вычисление срабатывать не будет,
-  // а в countries будет лежать предыдущее вычисленное значение
-  const countries = useMemo(
-    () => iso.all(),
-    [iso]
-  );
-
+function Weather({coordinates, weather, loading, loaded, error, loadWeather, countries}) {
   useEffect(() => {
     if (coordinates) {
       loadWeather(coordinates);
@@ -42,7 +31,7 @@ function Weather({coordinates, weather, loading, loaded, error, loadWeather}) {
     return <Error error={error} />
   }
 
-  const { main, sys} = weather;
+  const {main, sys} = weather;
   const сountryCode = sys.country;
   
   const { country } = countries.find((item) => item.alpha2 === сountryCode);  
@@ -67,10 +56,11 @@ Weather.propTypes = {
 }
 
 const mapStateToProps = (state, props) => ({
-  weather: weatherSelector(state),
-  loading: weatherLoadingSelector(state),
-  loaded: weatherLoadedSelector(state),
-  error: weatherErrorSelector(state),
+  weather: weatherSelector(state, props),
+  loading: weatherLoadingSelector(state, props),
+  loaded: weatherLoadedSelector(state, props),
+  error: weatherErrorSelector(state, props),
+  countries: countriesSelector(state, props),
 });
 
 const mapDispatchToProps = {
