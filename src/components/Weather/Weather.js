@@ -26,10 +26,6 @@ function Weather({coordinates, weather, loading, loaded, error}) {
   /* const lat = coordinates.map((item) => item.lat);
   const lon = coordinates.map((item) => item.lon); */
 
-  /* const url = `
-    https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}
-  `; */
-
   //const {loading, loaded, weather, error} = useFetch(url, coordinates);
 
   if (!loading && !loaded && !error) {
