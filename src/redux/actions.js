@@ -7,9 +7,13 @@ export const loadCoordinates = (city) => ({
 	city,
 });
 
-export const loadWeather = (lat, lon) => ({
+export const loadWeather = (coordinates) => {
+	const lat = coordinates.map((item) => item.lat);
+	const lon = coordinates.map((item) => item.lon);
+	return {
 	type: LOAD_WEATHER,
 	CallAPI: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}`,
 	lat,
 	lon,
-})
+	};
+};

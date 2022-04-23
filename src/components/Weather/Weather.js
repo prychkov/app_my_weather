@@ -9,8 +9,9 @@ import {
   weatherLoadedSelector,
   weatherErrorSelector
 } from '../../redux/selectors';
+import {loadWeather} from "../../redux/actions";
 
-function Weather({coordinates, weather, loading, loaded, error}) {
+function Weather({coordinates, weather, loading, loaded, error, loadWeather}) {
   const iso = useMemo(
     () => require('iso-3166-1'),
     []
@@ -23,10 +24,11 @@ function Weather({coordinates, weather, loading, loaded, error}) {
     [iso]
   );
 
-  /* const lat = coordinates.map((item) => item.lat);
-  const lon = coordinates.map((item) => item.lon); */
-
-  //const {loading, loaded, weather, error} = useFetch(url, coordinates);
+  useEffect(() => {
+    if (coordinates) {
+      loadWeather();
+    }
+  },[coordinates, loadWeather])
 
   if (!loading && !loaded && !error) {
     return <h3 className={styles.city}>Waiting please, loading start now</h3>;
@@ -71,4 +73,8 @@ const mapStateToProps = (state, props) => ({
   error: weatherErrorSelector(state),
 });
 
-export default connect(mapStateToProps)(Weather);
+const mapDispatchToProps = {
+  loadWeather,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Weather);
