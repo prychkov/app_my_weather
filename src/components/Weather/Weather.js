@@ -1,11 +1,16 @@
-import { useMemo } from "react";
-import useFetch from "../../hooks/use-fetch-weather";
+import { useEffect, useMemo } from "react";
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import styles from './weather.module.css';
-import APIkey from '../../APIkey';
 import Error from '../Error';
+import {
+  weatherSelector,
+  weatherLoadingSelector,
+  weatherLoadedSelector,
+  weatherErrorSelector
+} from '../../redux/selectors';
 
-function Weather({coordinates}) {
+function Weather({coordinates, weather, loading, loaded, error}) {
   const iso = useMemo(
     () => require('iso-3166-1'),
     []
@@ -18,14 +23,14 @@ function Weather({coordinates}) {
     [iso]
   );
 
-  const lat = coordinates.map((item) => item.lat);
-  const lon = coordinates.map((item) => item.lon);
+  /* const lat = coordinates.map((item) => item.lat);
+  const lon = coordinates.map((item) => item.lon); */
 
-  const url = `
+  /* const url = `
     https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}
-  `;
+  `; */
 
-  const {loading, loaded, weather, error} = useFetch(url, coordinates);
+  //const {loading, loaded, weather, error} = useFetch(url, coordinates);
 
   if (!loading && !loaded && !error) {
     return <h3 className={styles.city}>Waiting please, loading start now</h3>;
@@ -63,4 +68,11 @@ Weather.propTypes = {
   ),
 }
 
-export default Weather;
+const mapStateToProps = (state, props) => ({
+  weather: weatherSelector(state),
+  loading: weatherLoadingSelector(state),
+  loaded: weatherLoadedSelector(state),
+  error: weatherErrorSelector(state),
+});
+
+export default connect(mapStateToProps)(Weather);
