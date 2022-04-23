@@ -51,9 +51,13 @@ const mapStateToProps = (state) => ({
 	error: coordinatesErrorSelector(state),
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
+/* const mapDispatchToProps = (dispatch, props) => ({
 	loadCoordinates: () => dispatch(loadCoordinates(props.city)),
-});
+}); */
+
+const mapDispatchToProps = {
+	loadCoordinates,
+}
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(City);
