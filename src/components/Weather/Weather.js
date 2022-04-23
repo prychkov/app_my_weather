@@ -26,7 +26,7 @@ function Weather({coordinates, weather, loading, loaded, error, loadWeather}) {
 
   useEffect(() => {
     if (coordinates) {
-      loadWeather();
+      loadWeather(coordinates);
     }
   },[coordinates, loadWeather])
 
