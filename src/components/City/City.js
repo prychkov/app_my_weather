@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import styles from './city.module.css';
@@ -9,8 +10,15 @@ import {
 	coordinatesSelector,
 	coordinatesErrorSelector,
 } from '../../redux/selectors';
+import { loadCoordinates } from "../../redux/actions";
 
-function City({city, loading, loaded, coordinates, error}) {
+function City({city, loading, loaded, coordinates, error, loadCoordinates}) {
+
+	useEffect(() => {
+		if (city) {
+			loadCoordinates(city);
+		}
+	}, [city, loadCoordinates])
 
     if (!loading && !loaded && !error) {
         return <h3 className={styles.city}>Enter city please</h3>;
@@ -43,5 +51,9 @@ const mapStateToProps = (state) => ({
 	error: coordinatesErrorSelector(state),
 });
 
+const mapDispatchToProps = (dispatch, props) => ({
+	loadCoordinates: () => dispatch(loadCoordinates(props.city)),
+});
 
-export default connect(mapStateToProps)(City);
+
+export default connect(mapStateToProps, mapDispatchToProps)(City);
