@@ -12,7 +12,9 @@ export const loadWeather = (coordinates) => {
 	const lon = coordinates.map((item) => item.lon);
 	return {
 	type: LOAD_WEATHER,
-	CallAPI: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}`,
+	CallAPI: `
+	https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}&units=metric
+	`,
 	lat,
 	lon,
 	};

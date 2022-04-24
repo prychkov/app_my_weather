@@ -36,11 +36,9 @@ function Weather({coordinates, weather, loading, loaded, error, loadWeather, cou
   
   const { country } = countries.find((item) => item.alpha2 === сountryCode);  
 
-  // конвертация из Кельвин в градусы по цельсию
-  const degreeСelsius = (main.temp - 273.15).toFixed(1);
   return (
     <div className={styles.weather}>
-      <h2 className={styles.title}>{`Temperature:  ${degreeСelsius}ºC`}</h2>
+      <h2 className={styles.title}>{`Temperature:  ${main.temp.toFixed(0)}ºC`}</h2>
       <h2 className={styles.title}>{`Country:  ${country}`}</h2>
     </div>
   );
