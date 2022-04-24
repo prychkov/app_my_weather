@@ -6,7 +6,7 @@ export const coordinatesLoadingSelector = (state) => state.coordinates.loading;
 export const coordinatesLoadedSelector = (state) => state.coordinates.loaded;
 export const coordinatesErrorSelector = (state) => state.coordinates.error;
 
-export const weatherSelector = (state) => state.weather.data;
+const weatherSelector = (state) => state.weather.data;
 
 export const weatherLoadingSelector = (state) => state.weather.loading;
 export const weatherLoadedSelector = (state) => state.weather.loaded;
@@ -25,4 +25,12 @@ export const countriesSelector = createSelector(
 export const temperatureSelector = createSelector(
 	[weatherSelector],
 	(weather) => weather?.main.temp
+);
+
+export const countrySelector = createSelector(
+	[weatherSelector, countriesSelector],
+	(weather, countries) => {
+		const { country } = countries.find((item) => item.alpha2 === weather?.sys.country);
+		return country;
+	}
 );

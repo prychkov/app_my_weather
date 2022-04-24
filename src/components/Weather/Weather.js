@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import styles from './weather.module.css';
 import Error from '../Error';
 import {
-  weatherSelector,
   weatherLoadingSelector,
   weatherLoadedSelector,
   weatherErrorSelector,
   countriesSelector,
-  temperatureSelector
+  temperatureSelector,
+  countrySelector
 } from '../../redux/selectors';
 import {loadWeather} from "../../redux/actions";
 
-function Weather({coordinates, weather, loading, loaded, error, loadWeather, countries, temperature}) {
+function Weather({coordinates, loading, loaded, error, loadWeather, temperature, country}) { 
   useEffect(() => {
     if (coordinates) {
       loadWeather(coordinates);
@@ -30,12 +30,7 @@ function Weather({coordinates, weather, loading, loaded, error, loadWeather, cou
 
   if (error) {
     return <Error error={error} />
-  }
-
-  const {sys} = weather;
-  const сountryCode = sys.country;
-  
-  const { country } = countries.find((item) => item.alpha2 === сountryCode);  
+  } 
 
   return (
     <div className={styles.weather}>
@@ -55,12 +50,12 @@ Weather.propTypes = {
 }
 
 const mapStateToProps = (state, props) => ({
-  weather: weatherSelector(state, props),
   loading: weatherLoadingSelector(state, props),
   loaded: weatherLoadedSelector(state, props),
   error: weatherErrorSelector(state, props),
   countries: countriesSelector(state, props),
   temperature: temperatureSelector(state, props),
+  country: countrySelector(state, props),
 });
 
 const mapDispatchToProps = {
