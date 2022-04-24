@@ -21,3 +21,8 @@ export const countriesSelector = createSelector(
 	[isoSelector],
 	(iso) => iso.all()
 );
+
+export const temperatureSelector = createSelector(
+	[weatherSelector],
+	(weather) => weather?.main.temp
+);
