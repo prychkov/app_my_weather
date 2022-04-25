@@ -27,10 +27,10 @@ export const temperatureSelector = createSelector(
 	(weather) => weather?.main.temp
 );
 
-export const countrySelector = createSelector(
+export const countryDataSelector = createSelector(
 	[weatherSelector, countriesSelector],
 	(weather, countries) => {
-		const { country } = countries.find((item) => item.alpha2 === weather?.sys.country);
-		return country;
+		const countryData = (weather) ? countries.find((item) => item.alpha2 === weather?.sys.country) : null;
+		return countryData;
 	}
 );
