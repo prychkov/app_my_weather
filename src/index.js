@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
+import Error from './components/Error';
 import './index.css';
 
 import store from './redux/store';
@@ -11,7 +12,10 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <Routes>
+          <Route index element={<App />} />
+          <Route path='/error' element={<Error/>} />
+        </Routes>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
