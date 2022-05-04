@@ -1,22 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux';
 import App from './components/App';
-import Error from './components/Error';
 import './index.css';
 
+import history from './history';
 import store from './redux/store';
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<App />} />
-          <Route path='/error' element={<Error/>} />
-        </Routes>
-      </BrowserRouter>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -29,6 +29,7 @@ export default (state = initialState, action) => produce(state, (draft) => {
 				draft.loading = false;
 				draft.loaded = false;
 				draft.error = error;
+				draft.data = null;
 				break;
 			}
 			default: 

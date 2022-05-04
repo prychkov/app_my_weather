@@ -24,6 +24,10 @@ function Weather({coordinates, loading, loaded, error, loadWeather, temperature,
     return <h3 className={styles.city}>Waiting please, loading start now</h3>;
   }
 
+  if (!loading && !loaded) {
+    return <h3 className={styles.city}>Waiting please, loading start now</h3>;
+  }
+
   if (loading) {
     return <h3 className={styles.city}>Loading...</h3>;
   }

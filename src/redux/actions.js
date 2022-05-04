@@ -1,3 +1,4 @@
+import { replace } from 'connected-react-router';
 import {LOAD_COORDINATES, LOAD_WEATHER, REQUEST, SUCCESS, FAILURE} from './constants';
 import APIkey from '../APIkey';
 
@@ -12,7 +13,8 @@ export const loadCoordinates = (city) => async (dispatch) => {
 
 		dispatch({type: LOAD_COORDINATES + SUCCESS, city, data}); 
 	} catch(error) {
-		dispatch({type: LOAD_COORDINATES + FAILURE, city, error});	
+		dispatch({type: LOAD_COORDINATES + FAILURE, city, error});
+		dispatch(replace('/error'));
 	}
 };
 
@@ -30,6 +32,7 @@ export const loadWeather = (coordinates) => async (dispatch) => {
 
 		dispatch({type: LOAD_WEATHER + SUCCESS, coordinates, data}); 
 	} catch(error) {
-		dispatch({type: LOAD_WEATHER + FAILURE, coordinates, error});	
+		dispatch({type: LOAD_WEATHER + FAILURE, coordinates, error});
+		dispatch(replace('/error'));
 	}
 };

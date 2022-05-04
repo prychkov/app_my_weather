@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
 			};
 		case LOAD_WEATHER + FAILURE:
 			return {
-				...state,
+				data: null,
 				loading: false,
 				loaded: false,
 				error,

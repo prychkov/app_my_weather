@@ -18,9 +18,13 @@ function City({city, loading, loaded, coordinates, error, loadCoordinates}) {
 		if (city) {
 			loadCoordinates(city);
 		}
-	}, [city, loadCoordinates])
+	}, [city, loadCoordinates]);
 
     if (!loading && !loaded && !error) {
+        return <h3 className={styles.city}>Enter city please</h3>;
+    }
+
+	if (!loading && !loaded) {
         return <h3 className={styles.city}>Enter city please</h3>;
     }
 
@@ -29,7 +33,7 @@ function City({city, loading, loaded, coordinates, error, loadCoordinates}) {
     }
 
     if (error) {
-        return <Error error={error} />
+        return <Error error={error}/>
     }
 
     return (
@@ -50,10 +54,6 @@ const mapStateToProps = (state) => ({
 	coordinates: coordinatesSelector(state),
 	error: coordinatesErrorSelector(state),
 });
-
-/* const mapDispatchToProps = (dispatch, props) => ({
-	loadCoordinates: () => dispatch(loadCoordinates(props.city)),
-}); */
 
 const mapDispatchToProps = {
 	loadCoordinates,

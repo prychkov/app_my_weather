@@ -1,8 +1,8 @@
 import styles from './button.module.css';
 
-function Button() {
+function Button({label}) {
     return (
-        <button className={styles.btn}>Submit</button>
+        <button className={styles.btn}>{label}</button>
     );
 }
 
